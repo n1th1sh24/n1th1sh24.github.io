@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nithish M - 8-Bit Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e8e8e8;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.05),
+                rgba(0, 0, 0, 0.05) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pixel-border {
+            border: 3px solid #64ffda;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.3), inset 0 0 20px rgba(100, 255, 218, 0.05);
+            padding: 25px;
+            margin: 25px 0;
+            background: rgba(22, 33, 62, 0.85);
+            backdrop-filter: blur(10px);
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .pixel-border::before,
+        .pixel-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #64ffda;
+            border-radius: 1px;
+        }
+
+        .pixel-border::before {
+            top: -2px;
+            left: -2px;
+        }
+
+        .pixel-border::after {
+            bottom: -2px;
+            right: -2px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #64ffda;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 rgba(100, 255, 218, 0.3);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            color: #ffd93d;
+            margin: 30px 0 20px 0;
+            text-shadow: 1px 1px 0 rgba(255, 217, 61, 0.3);
+            border-bottom: 2px solid rgba(100, 255, 218, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 0.85em;
+            color: #a78bfa;
+            margin: 20px 0 10px 0;
+        }
+
+        .subtitle {
+            font-size: 0.75em;
+            color: #a78bfa;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .contact-info {
+            font-size: 0.6em;
+            color: #94a3b8;
+            margin: 15px 0;
+            line-height: 2;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+
+        .skill-bar {
+            background: rgba(30, 41, 59, 0.6);
+            height: 25px;
+            margin: 12px 0;
+            border: 2px solid #64ffda;
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #64ffda, #a78bfa);
+            animation: fillBar 1.5s ease-out;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 0.6em;
+            color: #1a1a2e;
+            font-weight: bold;
+        }
+
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 2px solid #a78bfa;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(167, 139, 250, 0.3);
+            border-color: #ffd93d;
+        }
+
+        .experience-item {
+            background: rgba(30, 41, 59, 0.4);
+            border-left: 4px solid #64ffda;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            border-radius: 0 4px 4px 0;
+            transition: all 0.3s;
+        }
+
+        .experience-item:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-left-width: 6px;
+        }
+
+        .experience-item::before {
+            content: '▶';
+            position: absolute;
+            left: -18px;
+            color: #64ffda;
+            font-size: 0.7em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #64ffda, #5ec9b5);
+            color: #1a1a2e;
+            border: 2px solid #64ffda;
+            text-decoration: none;
+            font-size: 0.65em;
+            margin: 10px 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 255, 218, 0.5);
+            background: linear-gradient(135deg, #5ec9b5, #64ffda);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(167, 139, 250, 0.1));
+            border: 2px solid #64ffda;
+            border-radius: 4px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.2em;
+            color: #ffd93d;
+            text-shadow: 2px 2px 0 rgba(255, 217, 61, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.2), rgba(167, 139, 250, 0.2));
+            color: #64ffda;
+            padding: 6px 12px;
+            margin: 5px;
+            font-size: 0.55em;
+            border: 1px solid #64ffda;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: rgba(100, 255, 218, 0.3);
+            transform: scale(1.05);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border: 2px solid #64ffda;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.02);
+            border-color: #ffd93d;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .gallery-thumb {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #a78bfa;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gallery-thumb:hover {
+            transform: scale(1.05);
+            border-color: #64ffda;
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.4);
+        }
+
+        .view-more-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background: rgba(100, 255, 218, 0.2);
+            color: #64ffda;
+            border: 2px solid #64ffda;
+            text-decoration: none;
+            font-size: 0.55em;
+            margin-top: 10px;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .view-more-btn:hover {
+            background: rgba(100, 255, 218, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .pixel-art {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            background: linear-gradient(135deg, #64ffda, #a78bfa);
+            clip-path: polygon(
+                0% 20%, 20% 20%, 20% 0%, 80% 0%, 80% 20%, 100% 20%,
+                100% 80%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0% 80%
+            );
+            animation: float 4s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.4);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .terminal {
+            background: rgba(10, 10, 15, 0.8);
+            color: #64ffda;
+            padding: 25px;
+            font-size: 0.65em;
+            margin: 25px 0;
+            border: 2px solid #64ffda;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.2);
+        }
+
+        .typing::after {
+            content: '█';
+            animation: cursor 1s infinite;
+            color: #ffd93d;
+        }
+
+        @keyframes cursor {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        p, li {
+            font-size: 0.65em;
+            margin: 12px 0;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        ul li::before {
+            content: '◆ ';
+            color: #a78bfa;
+            margin-right: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            color: #64ffda;
+            margin-top: 40px;
+        }
+
+        .emoji {
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.5em; }
+            h2 { font-size: 0.95em; }
+            .btn { padding: 12px 20px; font-size: 0.6em; }
+            .stat-box { padding: 20px; }
+            .stat-number { font-size: 1.8em; }
+        }
+
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #64ffda;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5ec9b5;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="scanlines"></div>
+    
+    <div class="container">
+        <header>
+            <div class="pixel-art"></div>
+            <h1>NITHISH M</h1>
+            <p class="subtitle">ELECTRONICS & ROBOTICS ENGINEER</p>
+            <div class="contact-info">
+                📍 Chennai, Tamil Nadu<br>
+                📧 m.nithishm24@gmail.com<br>
+                📱 +91 9345507994
+            </div>
+            <div style="margin-top: 25px;">
+                <a href="mailto:m.nithishm24@gmail.com" class="btn">SEND MESSAGE</a>
+                <a href="#projects" class="btn">VIEW PROJECTS</a>
+            </div>
+        </header>
+
+        <div class="terminal">
+            <div class="typing">
+                > Loading profile...<br>
+                > Initializing systems...<br>
+                > STATUS: Engineering student passionate about electronics and robotics<br>
+                > READY: Available for collaboration
+            </div>
+        </div>
+
+        <section class="section pixel-border">
+            <h2>💡 INTERESTS & PASSION</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">🤖</div>
+                    <h3 style="color: #64ffda; font-size: 0.75em; margin-top: 10px;">Robotics</h3>
+                    <p style="font-size: 0.6em;">Designing autonomous systems and integrating hardware-software solutions</p>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">⚡</div>
+                    <h3 style="color: #64ffda; font-size: 0.75em; margin-top: 10px;">Motor Design</h3>
+                    <p style="font-size: 0.6em;">Electromagnetic simulations and optimizing high-torque actuators</p>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">🔌</div>
+                    <h3 style="color: #64ffda; font-size: 0.75em; margin-top: 10px;">Electrical Systems</h3>
+                    <p style="font-size: 0.6em;">Power electronics, circuit design, and electrical distribution systems</p>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">🔧</div>
+                    <h3 style="color: #64ffda; font-size: 0.75em; margin-top: 10px;">Embedded Systems</h3>
+                    <p style="font-size: 0.6em;">Programming microcontrollers and developing PCB circuits</p>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">🎯</div>
+                    <h3 style="color: #64ffda; font-size: 0.75em; margin-top: 10px;">Innovation</h3>
+                    <p style="font-size: 0.6em;">Participating in hackathons and solving real-world engineering challenges</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pixel-border">
+            <h2>🎓 EDUCATION</h2>
+            <div class="experience-item">
+                <h3>B.Tech - Electrical & Electronics Engineering</h3>
+                <p>Vellore Institute of Technology, Chennai (2022-Present)</p>
+                <p>CGPA: 77.9%</p>
+            </div>
+            <div class="experience-item">
+                <h3>Higher Secondary (HSC) - 2022</h3>
+                <p>Francis Xavier CBSE School, Tirunelveli</p>
+                <p>Score: 89.9%</p>
+            </div>
+            <div class="experience-item">
+                <h3>Secondary School (SSLC) - 2020</h3>
+                <p>Vedic Vidyashram Senior Secondary School, Tirunelveli</p>
+                <p>Score: 89.9%</p>
+            </div>
+        </section>
+
+        <section class="section pixel-border">
+            <h2>💼 EXPERIENCE</h2>
+            <div class="experience-item">
+                <h3>Intern - DRDO CVRDE, Chennai</h3>
+                <p>June 2025 – August 2025</p>
+                <p>Designed a 3-phase inverter with STM32 for BLDC motor control in an automated ammunition loader. Focused on PCB design, circuit simulation, and hands-on testing for defense applications.</p>
+            </div>
+            <div class="experience-item">
+                <h3>Robocon 2023 - International Competition</h3>
+                <p>Participant</p>
+                <p>Developed the robot's electrical system by designing circuits and calculating power requirements for effective automation in a prestigious international robotics competition.</p>
+            </div>
+            <div class="experience-item">
+                <h3>IRC (International Rover Challenge) - 2025</h3>
+                <p>Participant</p>
+                <p>Designed and developed electrical circuits and power distribution systems for robotic automation. Calculated and optimized power requirements for competitive robotics.</p>
+            </div>
+            <div class="experience-item">
+                <h3>ROSCon 2023 India</h3>
+                <p>Participant</p>
+                <p>Attended workshops and discussions on robotics advancements and open-source software while networking with industry professionals.</p>
+            </div>
+            <div class="experience-item">
+                <h3>Club Leadership</h3>
+                <p>Technocrats Robotics - Electrical Lead (2023-24)</p>
+                <p>Humanoid-X Robotics - Member (2023-24)</p>
+                <p>IEEE RAS - Member (2023-24)</p>
+            </div>
+        </section>
+
+        <section class="section pixel-border" id="projects">
+            <h2>🎮 PROJECTS</h2>
+            <div class="project-card">
+                <h3>⚡ Axial Flux Motor</h3>
+                
+                <!-- Image Gallery -->
+                <div class="image-gallery">
+                    <img src="https://raw.githubusercontent.com/n1th1sh24/REPO_NAME/main/images/image1.jpg" alt="ANSYS Simulation" class="gallery-thumb" onclick="window.open('https://github.com/n1th1sh24/REPO_NAME', '_blank')">
+                    <img src="https://raw.githubusercontent.com/n1th1sh24/REPO_NAME/main/images/image2.jpg" alt="Motor Design" class="gallery-thumb" onclick="window.open('https://github.com/n1th1sh24/REPO_NAME', '_blank')">
+                    <img src="https://raw.githubusercontent.com/n1th1sh24/REPO_NAME/main/images/image3.jpg" alt="CAD Model" class="gallery-thumb" onclick="window.open('https://github.com/n1th1sh24/REPO_NAME', '_blank')">
+                </div>
+                
+                <p>Developed an efficient axial flux motor with optimized geometry and thermal management for high torque applications. 100W robotic actuator with 12 pole machine using Halbach array configuration.</p>
+                
+                <a href="https://github.com/n1th1sh24/REPO_NAME" target="_blank" class="view-more-btn">🔗 VIEW ON GITHUB</a>
+                
+                <div style="margin-top: 15px;">
+                    <span class="tag">MOTOR DESIGN</span>
+                    <span class="tag">ROBOTICS</span>
+                    <span class="tag">ANSYS</span>
+                    <span class="tag">CAD</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>🗺️ 3D Map Using Kinect 360</h3>
+                <p>Recorded point cloud of objects using Kinect 360 for mapping surroundings of an autonomous robot integrated via ROS.</p>
+                <div style="margin-top: 15px;">
+                    <span class="tag">ROS</span>
+                    <span class="tag">POINT CLOUD</span>
+                    <span class="tag">AUTONOMOUS</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>⏰ Digital Clock with 7-Segment Display</h3>
+                <p>Developed a digital clock using CD4026 ICs to drive 7-segment displays, with a 555-timer generating clock pulses.</p>
+                <div style="margin-top: 15px;">
+                    <span class="tag">DIGITAL ICs</span>
+                    <span class="tag">555 TIMER</span>
+                    <span class="tag">ELECTRONICS</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>🤖 Self-Balancing Bot</h3>
+                <p>Built a self-balancing robot using ESP-32, integrating IMU sensor and encoded motors for balance detection. Implemented PID control algorithms for real-time stability.</p>
+                <div style="margin-top: 15px;">
+                    <span class="tag">ESP-32</span>
+                    <span class="tag">PID CONTROL</span>
+                    <span class="tag">ROBOTICS</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pixel-border">
+            <h2>🛠️ TECHNICAL SKILLS</h2>
+            <h3>EDA Software</h3>
+            <p style="font-size: 0.75em;">
+                <span class="tag">KiCad</span>
+                <span class="tag">EasyEDA</span>
+                <span class="tag">Altium</span>
+            </p>
+            
+            <h3>Programming Languages</h3>
+            <p style="font-size: 0.75em;">
+                <span class="tag">C</span>
+                <span class="tag">Embedded-C</span>
+                <span class="tag">Python</span>
+                <span class="tag">Java</span>
+            </p>
+            
+            <h3>Embedded Systems</h3>
+            <p style="font-size: 0.75em;">
+                <span class="tag">Arduino</span>
+                <span class="tag">ESP-32</span>
+                <span class="tag">STM-32</span>
+                <span class="tag">Raspberry Pi</span>
+                <span class="tag">Pi Pico</span>
+                <span class="tag">PLCs</span>
+            </p>
+            
+            <h3>CAD & Simulation</h3>
+            <p style="font-size: 0.75em;">
+                <span class="tag">SolidWorks</span>
+                <span class="tag">Fusion 360</span>
+                <span class="tag">ANSYS Maxwell</span>
+                <span class="tag">Proteus</span>
+                <span class="tag">LT-Spice</span>
+                <span class="tag">MATLAB</span>
+                <span class="tag">LabVIEW</span>
+            </p>
+            
+            <h3>Platforms</h3>
+            <p style="font-size: 0.75em;">
+                <span class="tag">Windows</span>
+                <span class="tag">Linux Ubuntu</span>
+            </p>
+        </section>
+
+        <section class="section pixel-border">
+            <h2>🏆 ACHIEVEMENTS</h2>
+            <ul>
+                <li>First Place - SYNTHETIX Hackathon 2023</li>
+                <li>Conducted Workshop on Electronic Dice with 7-Segment Displays</li>
+                <li>Participated in Multiple International Robotics Competitions</li>
+                <li>Electrical Lead - Technocrats Robotics (Rover & Robocon Teams)</li>
+            </ul>
+        </section>
+
+        <section class="section pixel-border">
+            <h2>💪 STRENGTHS</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                <span class="tag">ADAPTABILITY</span>
+                <span class="tag">LEADERSHIP</span>
+                <span class="tag">PROBLEM SOLVING</span>
+                <span class="tag">DEBUGGING</span>
+                <span class="tag">ATTENTION TO DETAIL</span>
+            </div>
+        </section>
+
+        <section class="section pixel-border">
+            <h2>🌍 LANGUAGES</h2>
+            <div class="skill-bar">
+                <div class="skill-fill" style="width: 100%;">Tamil - Native</div>
+            </div>
+            <div class="skill-bar">
+                <div class="skill-fill" style="width: 90%;">English - Fluent</div>
+            </div>
+            <div class="skill-bar">
+                <div class="skill-fill" style="width: 40%;">Hindi - Elementary</div>
+            </div>
+        </section>
+
+        <footer>
+            <p class="emoji">🎮</p>
+            <p style="margin-top: 15px;">GAME OVER? NO, JUST THE BEGINNING!</p>
+            <p style="margin-top: 20px; font-size: 0.6em; color: #94a3b8;">Press START to continue...</p>
+            <div style="margin-top: 30px;">
+                <a href="#" class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">↑ BACK TO TOP ↑</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Create star field
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Smooth interactions
+        document.querySelectorAll('.project-card, .btn, .stat-box').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.style.filter = 'brightness(1.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.filter = 'brightness(1)';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
